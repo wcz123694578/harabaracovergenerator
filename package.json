@@ -1,0 +1,9 @@
+{
+  "name": "harabaracovergenerator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Harabara-style tracker/chiptune cover generator",
+  "scripts": {
+    "check": "node --check assets/js/app.js && node scripts/check.mjs"
+  }
+}

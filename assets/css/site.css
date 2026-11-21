@@ -1,0 +1,66 @@
+@font-face{font-family:"LocalHarabara";src:local("Harabara"),local("Harabara Mais"),local("Harabara Mais Demo");font-weight:700}
+/* Based on the visual conventions of the classic VS2013 ASP.NET Bootstrap 3 starter template. */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0;min-height:100%;background:#fff;color:#333;font:14px/1.42857143 "Helvetica Neue",Helvetica,Arial,"Microsoft YaHei",sans-serif}
+a{color:#337ab7;text-decoration:none}
+a:hover{text-decoration:underline;color:#23527c}
+.topnav{height:51px;background:#222;border-bottom:1px solid #080808;color:#9d9d9d}
+.nav-inner{width:1170px;max-width:100%;height:100%;margin:0 auto;padding:0 15px;display:flex;align-items:stretch}
+.brand{padding:15px 15px;margin-left:-15px;color:#9d9d9d;font-size:18px;line-height:20px;white-space:nowrap}
+.brand:hover{color:#fff;text-decoration:none}
+.nav-links{display:flex;align-items:stretch}
+.nav-links a{padding:15px;color:#9d9d9d;line-height:20px}
+.nav-links a:hover,.nav-links a.active{background:#080808;color:#fff;text-decoration:none}
+.main-container{max-width:1170px;padding:0 15px;margin:0 auto}
+.page-header{padding-bottom:9px;margin:34px 0 20px;border-bottom:1px solid #eee}
+h1{font-size:32px;font-weight:400;line-height:1.1;margin:0 0 12px}
+.page-content{display:grid;grid-template-columns:minmax(300px,390px) minmax(0,1fr);gap:28px;align-items:start}
+.panel{margin-bottom:20px;background-color:#fff;border:1px solid #ddd;border-radius:4px;box-shadow:0 1px 1px rgba(0,0,0,.05)}
+.panel-heading{padding:10px 15px;border-bottom:1px solid #ddd;border-radius:3px 3px 0 0;background:#f5f5f5;color:#333;font-size:16px;font-weight:400}
+.panel-body{padding:15px}
+.form-group{margin-bottom:15px}
+.form-group:last-child{margin-bottom:0}
+label{display:inline-block;max-width:100%;margin-bottom:5px;font-weight:700}
+.form-control{
+ display:block;width:100%;height:34px;padding:6px 12px;
+ font-size:14px;line-height:1.42857143;color:#555;
+ background:#fff;border:1px solid #ccc;border-radius:4px;
+ box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+ outline:none;transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out
+}
+.form-control:focus{border-color:#66afe9;box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)}
+textarea.form-control{height:62px;resize:vertical}
+.input-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.checkbox-row{display:flex;align-items:center;gap:7px;margin:3px 0 2px;font-weight:400;cursor:pointer}
+.checkbox-row input{margin:0}
+.form-range{margin-bottom:13px}
+.form-range:last-child{margin-bottom:0}
+.range-label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.range-label label{margin:0}
+.range-label output{font-weight:400;color:#777;font-size:13px}
+input[type=range]{display:block;width:100%;accent-color:#337ab7;cursor:pointer}
+input[type=color]{display:block;width:100%;height:34px;padding:2px;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer}
+.colors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.color-item{min-width:0}
+.color-item label{font-size:13px}
+.color-item span{display:block;font:12px/1.4 Consolas,monospace;color:#777;margin-top:4px}
+.font-note{color:#777;font-size:12px;line-height:1.5}
+.font-note.ok{color:#3c763d}
+.font-file{display:block;width:100%;font-size:13px;margin-top:7px}
+.btn{display:inline-block;padding:6px 12px;margin:0;font-size:14px;font-weight:400;line-height:1.42857143;text-align:center;white-space:nowrap;vertical-align:middle;cursor:pointer;background:#fff;border:1px solid #ccc;border-radius:4px;color:#333}
+.btn:hover{background:#e6e6e6;border-color:#adadad}
+.btn-primary{background:#337ab7;border-color:#2e6da4;color:#fff}
+.btn-primary:hover{background:#286090;border-color:#204d74;color:#fff}
+.editor-actions{display:flex;flex-wrap:wrap;gap:8px}
+.preview-panel{position:sticky;top:18px}
+.preview-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.preview-toolbar strong{font-size:16px;font-weight:400}
+.dimensions{color:#777;font-size:13px}
+.well{min-height:20px;padding:19px;margin-bottom:14px;background:#f5f5f5;border:1px solid #e3e3e3;border-radius:4px;box-shadow:inset 0 1px 1px rgba(0,0,0,.05);text-align:center}
+.canvas-outer{display:flex;align-items:center;justify-content:center;max-width:100%}
+canvas{display:block;max-width:100%;width:100%;height:auto;outline:1px solid #d9d9d9;background:#00152f}
+.help-block{display:block;margin-top:5px;margin-bottom:10px;color:#737373;font-size:12px;line-height:1.5}
+.footer{margin-top:28px;border-top:1px solid #eee;padding:16px 0;color:#777;font-size:12px}
+@media(max-width:900px){.page-content{grid-template-columns:1fr;gap:0}.preview-panel{position:static;grid-row:1;margin-bottom:20px}.main-container{max-width:750px}}
+@media(max-width:520px){.brand{font-size:16px}.nav-links a{padding:15px 9px}.main-container{padding:0 12px}.page-header{margin:20px 0}h1{font-size:26px}.colors{gap:8px}.input-row{gap:8px}.well{padding:10px}}
