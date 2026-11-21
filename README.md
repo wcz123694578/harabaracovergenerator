@@ -1,6 +1,6 @@
 # Harabara Cover Generator
 
-Tracker / Chiptune 曲目封面生成器。基于原生 HTML、CSS、JavaScript，可直接部署到 GitHub Pages。
+Tracker / Chiptune 曲目封面生成器。基于 HTML、CSS、jQuery 和原生 Canvas，可直接部署到 GitHub Pages。
 
 **在线地址：** https://wcz123694578.github.io/harabaracovergenerator/
 
@@ -19,7 +19,8 @@ Tracker / Chiptune 曲目封面生成器。基于原生 HTML、CSS、JavaScript�
 ├── index.html              # 页面结构
 ├── assets/
 │   ├── css/site.css        # ASP.NET 默认模板风格的界面样式
-│   └── js/app.js           # Canvas 绘制和页面交互
+│   ├── js/app.js           # jQuery 交互及 Canvas 绘制
+│   └── vendor/jquery/       # 本地 jQuery 4.1.0 和许可证
 ├── scripts/check.mjs       # 零依赖的静态检查
 ├── .github/workflows/check.yml
 └── package.json
@@ -35,7 +36,7 @@ python -m http.server 8000
 
 访问 http://localhost:8000/ 。
 
-项目不需要 Node.js 构建，也不需要下载 npm 依赖。开发时可选用 Node.js 运行基础检查：
+项目使用仓库内的 **jQuery 4.1.0**（MIT 许可证），不依赖外部 jQuery CDN，无需 Node.js 构建或安装 npm 依赖。开发时可选用 Node.js 运行基础检查：
 
 ```bash
 npm run check
