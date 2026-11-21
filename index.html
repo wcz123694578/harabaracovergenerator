@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tracker 封面生成器</title>
+<style>
+@font-face{font-family:"LocalHarabara";src:local("Harabara"),local("Harabara Mais"),local("Harabara Mais Demo");font-weight:700}
+/* Based on the visual conventions of the classic VS2013 ASP.NET Bootstrap 3 starter template. */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0;min-height:100%;background:#fff;color:#333;font:14px/1.42857143 "Helvetica Neue",Helvetica,Arial,"Microsoft YaHei",sans-serif}
+a{color:#337ab7;text-decoration:none}
+a:hover{text-decoration:underline;color:#23527c}
+.topnav{height:51px;background:#222;border-bottom:1px solid #080808;color:#9d9d9d}
+.nav-inner{width:1170px;max-width:100%;height:100%;margin:0 auto;padding:0 15px;display:flex;align-items:stretch}
+.brand{padding:15px 15px;margin-left:-15px;color:#9d9d9d;font-size:18px;line-height:20px;white-space:nowrap}
+.brand:hover{color:#fff;text-decoration:none}
+.nav-links{display:flex;align-items:stretch}
+.nav-links a{padding:15px;color:#9d9d9d;line-height:20px}
+.nav-links a:hover,.nav-links a.active{background:#080808;color:#fff;text-decoration:none}
+.main-container{max-width:1170px;padding:0 15px;margin:0 auto}
+.page-header{padding-bottom:9px;margin:34px 0 20px;border-bottom:1px solid #eee}
+h1{font-size:32px;font-weight:400;line-height:1.1;margin:0 0 12px}
+.page-content{display:grid;grid-template-columns:minmax(300px,390px) minmax(0,1fr);gap:28px;align-items:start}
+.panel{margin-bottom:20px;background-color:#fff;border:1px solid #ddd;border-radius:4px;box-shadow:0 1px 1px rgba(0,0,0,.05)}
+.panel-heading{padding:10px 15px;border-bottom:1px solid #ddd;border-radius:3px 3px 0 0;background:#f5f5f5;color:#333;font-size:16px;font-weight:400}
+.panel-body{padding:15px}
+.form-group{margin-bottom:15px}
+.form-group:last-child{margin-bottom:0}
+label{display:inline-block;max-width:100%;margin-bottom:5px;font-weight:700}
+.form-control{
+ display:block;width:100%;height:34px;padding:6px 12px;
+ font-size:14px;line-height:1.42857143;color:#555;
+ background:#fff;border:1px solid #ccc;border-radius:4px;
+ box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+ outline:none;transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out
+}
+.form-control:focus{border-color:#66afe9;box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)}
+textarea.form-control{height:62px;resize:vertical}
+.input-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.checkbox-row{display:flex;align-items:center;gap:7px;margin:3px 0 2px;font-weight:400;cursor:pointer}
+.checkbox-row input{margin:0}
+.form-range{margin-bottom:13px}
+.form-range:last-child{margin-bottom:0}
+.range-label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.range-label label{margin:0}
+.range-label output{font-weight:400;color:#777;font-size:13px}
+input[type=range]{display:block;width:100%;accent-color:#337ab7;cursor:pointer}
+input[type=color]{display:block;width:100%;height:34px;padding:2px;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer}
+.colors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.color-item{min-width:0}
+.color-item label{font-size:13px}
+.color-item span{display:block;font:12px/1.4 Consolas,monospace;color:#777;margin-top:4px}
+.font-note{color:#777;font-size:12px;line-height:1.5}
+.font-note.ok{color:#3c763d}
+.font-file{display:block;width:100%;font-size:13px;margin-top:7px}
+.btn{display:inline-block;padding:6px 12px;margin:0;font-size:14px;font-weight:400;line-height:1.42857143;text-align:center;white-space:nowrap;vertical-align:middle;cursor:pointer;background:#fff;border:1px solid #ccc;border-radius:4px;color:#333}
+.btn:hover{background:#e6e6e6;border-color:#adadad}
+.btn-primary{background:#337ab7;border-color:#2e6da4;color:#fff}
+.btn-primary:hover{background:#286090;border-color:#204d74;color:#fff}
+.editor-actions{display:flex;flex-wrap:wrap;gap:8px}
+.preview-panel{position:sticky;top:18px}
+.preview-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.preview-toolbar strong{font-size:16px;font-weight:400}
+.dimensions{color:#777;font-size:13px}
+.well{min-height:20px;padding:19px;margin-bottom:14px;background:#f5f5f5;border:1px solid #e3e3e3;border-radius:4px;box-shadow:inset 0 1px 1px rgba(0,0,0,.05);text-align:center}
+.canvas-outer{display:flex;align-items:center;justify-content:center;max-width:100%}
+canvas{display:block;max-width:100%;width:100%;height:auto;outline:1px solid #d9d9d9;background:#00152f}
+.help-block{display:block;margin-top:5px;margin-bottom:10px;color:#737373;font-size:12px;line-height:1.5}
+.footer{margin-top:28px;border-top:1px solid #eee;padding:16px 0;color:#777;font-size:12px}
+@media(max-width:900px){.page-content{grid-template-columns:1fr;gap:0}.preview-panel{position:static;grid-row:1;margin-bottom:20px}.main-container{max-width:750px}}
+@media(max-width:520px){.brand{font-size:16px}.nav-links a{padding:15px 9px}.main-container{padding:0 12px}.page-header{margin:20px 0}h1{font-size:26px}.colors{gap:8px}.input-row{gap:8px}.well{padding:10px}}
+</style>
+</head>
+<body id="page-top">
+<nav class="topnav" aria-label="主导航">
+ <div class="nav-inner">
+   <a href="#page-top" class="brand">Tracker Cover Generator</a>
+   <div class="nav-links">
+     <a href="#editor" class="active">封面编辑</a>
+     <a href="#font-settings">字体设置</a>
+   </div>
+ </div>
+</nav>
+<div class="main-container" id="editor">
+ <div class="page-header"><h1>Tracker 封面生成器</h1></div>
+ <div class="page-content">
+   <div>
+     <section class="panel">
+       <div class="panel-heading">文字</div>
+       <div class="panel-body">
+         <div class="form-group">
+           <label for="title">主标题</label>
+           <textarea class="form-control" id="title" spellcheck="false">Admit</textarea>
+         </div>
+         <div class="form-group">
+           <label for="subtitle">副标题</label>
+           <input class="form-control" id="subtitle" type="text" value="kyo alt" spellcheck="false">
+         </div>
+       </div>
+     </section>
+     <section class="panel">
+       <div class="panel-heading">封面尺寸</div>
+       <div class="panel-body">
+         <div class="form-group">
+           <label for="preset">预设分辨率</label>
+           <select class="form-control" id="preset">
+             <option value="1200x900">1200 × 900（4:3）</option>
+             <option value="640x480">640 × 480（4:3）</option>
+             <option value="1080x1080">1080 × 1080（1:1）</option>
+             <option value="1280x720">1280 × 720（16:9）</option>
+             <option value="1920x1080">1920 × 1080（16:9）</option>
+             <option value="custom">自定义</option>
+           </select>
+         </div>
+         <div class="input-row">
+           <div class="form-group"><label for="width">宽度 (px)</label><input class="form-control" id="width" type="number" min="64" max="8192" value="1200"></div>
+           <div class="form-group"><label for="height">高度 (px)</label><input class="form-control" id="height" type="number" min="64" max="8192" value="900"></div>
+         </div>
+         <label class="checkbox-row"><input id="lockRatio" type="checkbox" checked> 锁定宽高比例</label>
+       </div>
+     </section>
+     <section class="panel">
+       <div class="panel-heading">配色</div>
+       <div class="panel-body">
+         <div class="colors">
+           <div class="color-item"><label for="bg">背景</label><input id="bg" type="color" value="#00152f"><span id="bgval">#00152F</span></div>
+           <div class="color-item"><label for="maincolor">主标题</label><input id="maincolor" type="color" value="#f1ee95"><span id="maincolorval">#F1EE95</span></div>
+           <div class="color-item"><label for="subcolor">副标题</label><input id="subcolor" type="color" value="#076a94"><span id="subcolorval">#076A94</span></div>
+         </div>
+       </div>
+     </section>
+     <section class="panel">
+       <div class="panel-heading">排版</div>
+       <div class="panel-body">
+         <div class="form-range">
+           <div class="range-label"><label for="mainwidth">主标题宽度</label><output id="mainwidthval">55%</output></div>
+           <input id="mainwidth" type="range" min="25" max="90" value="55">
+         </div>
+         <div class="form-range">
+           <div class="range-label"><label for="subwidth">副标题宽度</label><output id="subwidthval">44%</output></div>
+           <input id="subwidth" type="range" min="20" max="90" value="44">
+         </div>
+         <div class="form-range">
+           <div class="range-label"><label for="gap">两行间距</label><output id="gapval">2 px</output></div>
+           <input id="gap" type="range" min="-15" max="40" value="2">
+         </div>
+         <div class="form-range">
+           <div class="range-label"><label for="top">整体上下位置</label><output id="topval">29%</output></div>
+           <input id="top" type="range" min="5" max="60" value="29">
+         </div>
+       </div>
+     </section>
+     <section class="panel" id="font-settings">
+       <div class="panel-heading">字体</div>
+       <div class="panel-body">
+         <div class="font-note" id="fontstatus" aria-live="polite">尝试加载 Harabara 字体……</div>
+         <div class="form-group" style="margin-top:12px">
+           <label for="fontfile">导入本地 Harabara 字体文件</label>
+           <input class="font-file" id="fontfile" type="file" accept=".ttf,.otf,.woff,.woff2">
+           <span class="help-block">支持 TTF、OTF、WOFF、WOFF2。</span>
+         </div>
+         <div class="font-note">如果在线加载失败，可从 <a href="https://www.dafont.com/harabara-mais.font" target="_blank" rel="noopener">DaFont</a> 获取字体 Demo 并导入。请留意字体授权。</div>
+       </div>
+     </section>
+   </div>
+   <section class="preview-panel" aria-label="封面预览">
+     <div class="preview-toolbar">
+       <strong>封面预览</strong>
+       <span class="dimensions" id="dimensions">1200 × 900</span>
+     </div>
+     <div class="well">
+       <div class="canvas-outer"><canvas id="cover" width="1200" height="900" role="img" aria-label="封面预览"></canvas></div>
+     </div>
+     <div class="editor-actions">
+       <button type="button" class="btn btn-primary" id="save">导出 PNG</button>
+       <button type="button" class="btn" id="reset">恢复默认</button>
+     </div>
+     <span class="help-block">PNG 输出分辨率与设置的宽高一致。</span>
+   </section>
+ </div>
+ <div class="footer">Tracker Cover Generator</div>
+</div>
+<script>
+
+(()=>{
+const el=id=>document.getElementById(id);
+const cvs=el('cover'),ctx=cvs.getContext('2d',{alpha:false});
+const inputIds=['title','subtitle','bg','maincolor','subcolor','mainwidth','subwidth','gap','top'];
+const state={font:'fallback', uploadedName:''};
+const DEFAULT={w:1200,h:900};
+let ratio=DEFAULT.w/DEFAULT.h;
+const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
+const numberValue=(node,fallback)=>{const n=Math.round(Number(node.value));return Number.isFinite(n)?clamp(n,64,8192):fallback};
+function setCanvasSize(w,h){
+  w=clamp(Math.round(w),64,8192);h=clamp(Math.round(h),64,8192);
+  if(cvs.width!==w)cvs.width=w;if(cvs.height!==h)cvs.height=h;
+  el('dimensions').textContent=`${w} × ${h}`;
+}
+function fontFamily(){
+  if(state.font==='file')return '"ImportedHarabara", sans-serif';
+  if(state.font==='remote')return '"Harabara", sans-serif';
+  if(state.font==='local')return '"LocalHarabara", sans-serif';
+  return '"Arial Rounded MT Bold", "Trebuchet MS", Verdana, sans-serif';
+}
+function setFont(size){ctx.font=`${state.font==='fallback'?900:700} ${size}px ${fontFamily()}`;ctx.textAlign='center';ctx.textBaseline='alphabetic'}
+function metrics(text,size){setFont(size);return ctx.measureText(text)}
+function fit(text,maxWidth){
+  let lo=1,hi=Math.max(128,cvs.width*1.5);
+  for(let i=0;i<26;i++){const m=(lo+hi)/2;if(metrics(text,m).width>maxWidth)hi=m;else lo=m}
+  return (lo+hi)/2;
+}
+function inkHeight(m,size){return (m.actualBoundingBoxAscent||size*.75)+(m.actualBoundingBoxDescent||size*.2)}
+function inkAscent(m,size){return m.actualBoundingBoxAscent||size*.75}
+function draw(){
+  const w=numberValue(el('width'),DEFAULT.w),h=numberValue(el('height'),DEFAULT.h);
+  setCanvasSize(w,h);
+  ctx.fillStyle=el('bg').value;ctx.fillRect(0,0,w,h);
+  const texts=el('title').value.replace(/\r/g,'').split('\n').map(v=>v.trim()).filter(Boolean);
+  const lines=texts.length?texts:['Admit'];
+  const sub=el('subtitle').value;
+  const maxTitleW=w*Number(el('mainwidth').value)/100;
+  let size=Math.min(...lines.map(line=>fit(line,maxTitleW)));
+  size=Math.min(size,h*.38);
+  // Main title's ink top, then subtitle's ink top: no extra line-height padding.
+  let y=h*Number(el('top').value)/100;
+  ctx.fillStyle=el('maincolor').value;
+  lines.forEach((line,i)=>{
+    const m=metrics(line,size);
+    const ascent=inkAscent(m,size),height=inkHeight(m,size);
+    setFont(size);ctx.fillText(line,w/2,y+ascent);
+    y+=height+(i===lines.length-1?0:size*.035);
+  });
+  const subSize=Math.min(fit(sub||' ',w*Number(el('subwidth').value)/100),size*1.0,h*.25);
+  const subM=metrics(sub||' ',subSize);
+  const referenceScale=Math.min(w/300,h/225);
+  y+=Number(el('gap').value)*referenceScale;
+  ctx.fillStyle=el('subcolor').value;setFont(subSize);
+  ctx.fillText(sub,w/2,y+inkAscent(subM,subSize));
+  ['bg','maincolor','subcolor'].forEach(id=>el(id+'val').textContent=el(id).value.toUpperCase());
+  ['mainwidth','subwidth'].forEach(id=>el(id+'val').textContent=el(id).value+'%');
+  el('gapval').textContent=el('gap').value+' px';el('topval').textContent=el('top').value+'%';
+}
+function presetValue(w,h){return `${w}x${h}`}
+function syncPreset(){
+  const current=presetValue(el('width').value,el('height').value);
+  el('preset').value=[...el('preset').options].some(o=>o.value===current)?current:'custom';
+}
+function setSize(w,h){
+  el('width').value=w;el('height').value=h;ratio=w/h;syncPreset();draw();
+}
+el('preset').addEventListener('change',()=>{
+  const val=el('preset').value;if(val==='custom')return;
+  const [w,h]=val.split('x').map(Number);setSize(w,h);
+});
+el('width').addEventListener('input',()=>{
+  if(el('width').value==='')return;
+  const w=numberValue(el('width'),DEFAULT.w);
+  if(el('lockRatio').checked)el('height').value=clamp(Math.round(w/ratio),64,8192);
+  else ratio=w/numberValue(el('height'),DEFAULT.h);
+  syncPreset();draw();
+});
+el('height').addEventListener('input',()=>{
+  if(el('height').value==='')return;
+  const h=numberValue(el('height'),DEFAULT.h);
+  if(el('lockRatio').checked)el('width').value=clamp(Math.round(h*ratio),64,8192);
+  else ratio=numberValue(el('width'),DEFAULT.w)/h;
+  syncPreset();draw();
+});
+el('lockRatio').addEventListener('change',()=>ratio=numberValue(el('width'),DEFAULT.w)/numberValue(el('height'),DEFAULT.h));
+for(const id of inputIds)el(id).addEventListener('input',draw);
+el('reset').addEventListener('click',()=>{
+  el('title').value='Admit';el('subtitle').value='kyo alt';
+  el('bg').value='#00152f';el('maincolor').value='#f1ee95';el('subcolor').value='#076a94';
+  el('mainwidth').value=55;el('subwidth').value=44;el('gap').value=2;el('top').value=29;
+  el('lockRatio').checked=true;setSize(1200,900);
+});
+el('save').addEventListener('click',()=>{
+  draw();const a=document.createElement('a');
+  a.download=(el('title').value.trim().replace(/[^\p{L}\p{N}_-]+/gu,'_').slice(0,40)||'cover')+'.png';
+  a.href=cvs.toDataURL('image/png');a.click();
+});
+el('fontfile').addEventListener('change',async e=>{
+  const f=e.target.files?.[0];if(!f)return;
+  try{
+    const face=new FontFace('ImportedHarabara',await f.arrayBuffer(),{weight:'700'});
+    await face.load();document.fonts.add(face);
+    state.font='file';state.uploadedName=f.name;
+    el('fontstatus').className='font-note ok';el('fontstatus').textContent=`已使用导入字体：${f.name}`;draw();
+  }catch(error){el('fontstatus').className='font-note';el('fontstatus').textContent='字体导入失败，请检查文件格式。'}
+});
+async function initFont(){
+  const loaded=async name=>{
+    try{
+      const faces=await document.fonts.load(`700 48px "${name}"`);
+      return faces.some(face=>face.status==='loaded'&&face.family.replace(/["']/g,'').toLowerCase()===name.toLowerCase());
+    }catch(e){return false}
+  };
+  if(await loaded('Harabara')){
+    if(state.font!=='file'){state.font='remote';el('fontstatus').className='font-note ok';el('fontstatus').textContent='在线 Harabara 已加载';draw()}
+  }else if(await loaded('LocalHarabara')){
+    if(state.font!=='file'){state.font='local';el('fontstatus').className='font-note ok';el('fontstatus').textContent='已使用本机 Harabara 字体';draw()}
+  }else{
+    if(state.font!=='file'){el('fontstatus').className='font-note';el('fontstatus').textContent='未加载到 Harabara，暂用回退字体；可导入字体文件。';draw()}
+  }
+}
+draw();
+initFont();
+// Load the remote stylesheet without holding up the preview when the CDN is blocked.
+const remoteFontStylesheet=document.createElement('link');
+remoteFontStylesheet.rel='stylesheet';
+remoteFontStylesheet.href='https://fonts.cdnfonts.com/css/harabara';
+remoteFontStylesheet.addEventListener('load',()=>initFont());
+remoteFontStylesheet.addEventListener('error',()=>initFont());
+document.head.appendChild(remoteFontStylesheet);
+})();
+
+</script>
+</body>
+</html>
